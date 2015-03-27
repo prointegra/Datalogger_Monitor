@@ -60,13 +60,13 @@ mail to: jcuellar (at) prointegra.com
 
 ##Changelog
 
-**v0.1: (2015/03/27) **
+**v0.1: (2015/03/27)**
 
 *First version working in a real environment, with 4 PM800 measuring energy*
 
 * (DEBUG): removed an acumulative time error sampling slaves
 
-**v0.1rc2 unestable: (20/03/2015) FUNCTION TEST DURING WEEKEND**
+**v0.1rc2 unestable: (2015/03/20) FUNCTION TEST DURING WEEKEND**
 
 * (DEBUG&IMPROVE): CSV file load to DATA_INDEX table of the database. Added new features as equipment, scale and units.
 * (DEBUG)Monitor: now the sample time is adjusted: i.e: 20 seconds are 20 seconds in database (not 21)
@@ -76,7 +76,7 @@ VAlue = (Register 4 x 1000000000000) + (Register 3 x 100000000) + (Register 2 x 
 ```
 * (DEBUG)Monitor: database variables as Float, not INT.
 
-**v0.1rc1: (19/03/2015) START POINT**
+**v0.1rc1: (2015/03/19) START POINT**
 
 
 * Comm: communications possible via Modbus TCP/IP & Modbus RTU
