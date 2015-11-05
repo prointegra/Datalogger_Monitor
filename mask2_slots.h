@@ -1,12 +1,9 @@
 //###############################################################
-//# mask1_slots.h for ProcessViewServer created: vie mar 27 13:39:08 2015
+//# mask2_slots.h for ProcessViewServer created: vie mar 27 13:39:08 2015
 //# please fill out these slots
 //# here you find all possible events
 //# Yours: Lehrig Software Engineering
 //###############################################################
-
-
-//WELCOME PAGE
 
 // todo: uncomment me if you want to use this data aquisiton
 // also uncomment this classes in main.cpp and pvapp.h

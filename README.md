@@ -60,6 +60,9 @@ mail to: jcuellar (at) prointegra.com
 
 ##Changelog
 
+**v0.1.1: (2015/08/01)**
+* database structure redesigned, energy log now shows all variables in every row
+
 **v0.1: (2015/03/27)**
 
 *First version working in a real environment, with 4 PM800 measuring energy*

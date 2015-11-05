@@ -23,6 +23,7 @@
 /*! Constructor*/
 MonCaptureDevice::MonCaptureDevice()
 {
+  errCount = 0;
  return;   
 }
 
@@ -74,6 +75,7 @@ int MonCaptureDevice::getDataMailbox(time_t now)
   if(readData)
     delete readData;
   readData = new mbRegData[nRegs];
+
   for(i=0;i<nRegs; i++)
     {
       saveRegister(i);
@@ -106,11 +108,17 @@ int MonCaptureDevice::saveRegister(int reg)
     {
     case(1): //TIPO INT
       readData[reg].valueL = mailbox->intValue(registers[reg].address.c_str());
+      //ERROR?
+      if(readData[reg].valueL == DAQ_ERROR)
+	readData[reg].err = 1;
+      else
+	readData[reg].err = 0;
+      /////////
       readData[reg].index = reg+1;
 
       break;
     case(10): //TIPO MOD10
-      if(!addAddress_n(reg,3))
+      if(!addAddress_n(reg,3))//add 3 addresses to register reg
 	{
 	  //cout <<"DEBUG:" << endl << registers[reg].address.c_str() << endl;
 	  //cout <<registers[reg].addressH << endl;
@@ -120,6 +128,12 @@ int MonCaptureDevice::saveRegister(int reg)
 	  readData[reg].valueL = mailbox->intValue(registers[reg].addressH.c_str());
 	  readData[reg].valueH = mailbox->intValue(registers[reg].addressHH.c_str());	  
 	  readData[reg].valueHH = mailbox->intValue(registers[reg].addressHHH.c_str());
+	  //ERROR?
+	  if((readData[reg].valueL == DAQ_ERROR) || (readData[reg].valueLL == DAQ_ERROR) || (readData[reg].valueH == DAQ_ERROR)|| (readData[reg].valueHH == DAQ_ERROR))
+	    readData[reg].err = 1;
+	  else
+	    readData[reg].err = 0;
+	  /////////
 	}
       else
 	{
@@ -394,13 +408,12 @@ int MonCapturer::captureDB(int comm)
       //    cout << "DEBUG: getmtime" << devicesInterf[comm].getmTime() <<  endl;
       if(devicesInterf[comm].getmTime()> 0)
 	{
-	  //  cout << "DEBUG: getting registers from comm" << comm <<  endl;
+	  //getting registers from comm to store
 	  devicesInterf[comm].getReadRegisters(&tData);
-	  //cout << "DEBUG: setting registers from comm to DB" << comm <<  endl;
-
+	  //store registers to db
 	  database->dbSaveEnergy(comm,devicesInterf[comm].getnRegs(),&tData);
 	}
-      else
+      else //EVENTS?
 	return 1;
       //database->dbSaveEvents(&);
     }

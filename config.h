@@ -24,6 +24,11 @@
 
 using namespace std;
 
+enum RLLIB_ERRORS
+  {
+
+    DAQ_ERROR = 8388608
+  };
 
 //members
 /*!register to save*/
@@ -40,6 +45,7 @@ typedef struct
   int cycle;
   char comment[100];
   int type;
+  int err;
 } mbRegData;
 
 //members
@@ -65,6 +71,7 @@ typedef struct
 } mbSlaves;
 
 
+
 class MonConfigurator 
 {
  public:
@@ -78,12 +85,20 @@ class MonConfigurator
   int getSlavemTime(int id);
   int getSlavenRegs(int id); 
   int getSlaveReadData(int id,mbReadData **);
+  //COmmunications
+  int setModbusRTU(int i){MODBUSRTU = i; return 0;}
+  int setModbusTCP(int i){MODBUSTCP = i; return 0;}
+  int getModbusRTU(){return MODBUSRTU;}
+  int getModbusTCP(){return MODBUSTCP;}
 
  private:
   pugi::xml_document doc;
   //number of slaves and type
   mbSlaves* ConfigSlaves;
   int nSlaves;
+
+  int MODBUSRTU;
+  int MODBUSTCP;
 
   const char* stypes[2] = {"INT","MOD10"};
   const int itypes[2]= {1,10};

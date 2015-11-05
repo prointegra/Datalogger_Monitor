@@ -54,6 +54,7 @@ pid_t piproc_find(const char* name);
 int launchDaemonMBTCP();
 int launchDaemonMBRTU();
 
+int show_mask2(PARAM *p);
 int show_mask1(PARAM *p);
 
 #endif

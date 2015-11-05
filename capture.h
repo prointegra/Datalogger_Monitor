@@ -76,6 +76,7 @@ class MonCaptureDevice
   mbReadData* registers;
   mbRegData* readData;
   time_t lastTime;
+  int errCount;
   
 
 };

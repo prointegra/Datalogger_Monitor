@@ -1,6 +1,20 @@
+/*
+ * 	Prointegra Datalogger, Monitor
+ *
+ *  Copyright 2014-2015 by it's authors. 
+ *
+ *  Some rights reserved. See COPYING, AUTHORS.
+ *  This file may be used under the terms of the GNU General Public
+ *  License version 3.0 as published by the Free Software Foundation
+ *  and appearing in the file COPYING included in the packaging of
+ *  this file.
+ *
+ *  This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+ *  WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ */
 ////////////////////////////////////////////////////////////////////////////
 //
-// show_mask1 for ProcessViewServer created: vie mar 27 13:39:08 2015
+// show_mask1 for ProcessViewServer created: mié feb 18 10:30:17 2015
 //
 ////////////////////////////////////////////////////////////////////////////
 #include "pvapp.h"
@@ -10,22 +24,52 @@
 // our mask contains the following objects
 enum {
   ID_MAIN_WIDGET = 0,
-  logo,
-  button1,
-  title,
-  version,
-  ID_VERSION,
+  tab,
+  tab_inicio,
+  obj2,
+  obj4,
+  obj5,
+  obj6,
+  obj7,
+  obj8,
+  obj9,
+  obj10,
+  obj11,
+  obj12,
+  debug_search,
+  debug_search_btn,
+  debug_find,
+  debug_search2,
+  debug_find2,
+  debug_search_btn2,
+  obj3,
+  console_output,
   ID_END_OF_WIDGETS
 };
 
 // our mask contains the following widget names
   static const char *widgetName[] = {
   "ID_MAIN_WIDGET",
-  "logo",
-  "button1",
-  "title",
-  "version",
-  "ID_VERSION",
+  "tab",
+  "tab_inicio",
+  "obj2",
+  "obj4",
+  "obj5",
+  "obj6",
+  "obj7",
+  "obj8",
+  "obj9",
+  "obj10",
+  "obj11",
+  "obj12",
+  "debug_search",
+  "debug_search_btn",
+  "debug_find",
+  "debug_search2",
+  "debug_find2",
+  "debug_search_btn2",
+  "obj3",
+  "console_output",
   "ID_END_OF_WIDGETS",
   ""};
 
@@ -35,11 +79,43 @@ enum {
   "",
   "",
   "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
   ""};
 
   static const char *whatsThis[] = {
   "",
-  "./images/logo.png",
+  "",
+  "./images/grey.png",
+  "",
+  "./images/grey.png",
+  "",
+  "",
+  "./images/grey.png",
+  "",
+  "",
+ "./images/grey.png",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
   "",
   "",
   "",
@@ -47,10 +123,26 @@ enum {
 
   static const int widgetType[ID_END_OF_WIDGETS+1] = {
   0,
+  TQTabWidget,
+  TQWidget,
+  TQWidget,
   TQImage,
+  TQLabel,
   TQPushButton,
+  TQImage,
   TQLabel,
+  TQPushButton,
+  TQImage,
   TQLabel,
+  TQPushButton,
+  TQLineEdit,
+  TQPushButton,
+  TQLineEdit,
+  TQLineEdit,
+  TQLineEdit,
+  TQPushButton,
+  TQWidget,
+  TQTextBrowser,
   -1 };
 
 static int generated_defineMask(PARAM *p)
@@ -64,39 +156,111 @@ static int generated_defineMask(PARAM *p)
   if(w==h) depth=0; // fool the compiler
   pvStartDefinition(p,ID_END_OF_WIDGETS);
 
-  pvDownloadFile(p,"./images/logo.png");
-  pvQImage(p,logo,0,"./images/logo.png",&w,&h,&depth);
-  pvSetGeometry(p,logo,228,87,680,160);
-  pvSetFont(p,logo,"Sans Serif",9,0,0,0,0);
-  pvSetWhatsThis(p,logo,pvtr("./images/logo.png"));
+  pvQTabWidget(p,tab,0);
+  pvSetGeometry(p,tab,1,1,800,640);
+  pvSetFont(p,tab,"Sans Serif",9,0,0,0,0);
+  pvSetWhatsThis(p,tab,pvtr("./images/grey.png"));
 
-  pvQPushButton(p,button1,0);
-  pvSetGeometry(p,button1,522,516,120,50);
-  pvSetText(p,button1,pvtr("Continue"));
-  pvSetFont(p,button1,"Sans Serif",12,1,0,0,0);
+  pvQWidget(p,tab_inicio,tab);
+  pvAddTab(p,tab,tab_inicio,pvtr("Main"));
+  pvSetFont(p,tab_inicio,"Verdana",10,0,0,0,0);
 
-  pvQLabel(p,title,0);
-  pvSetGeometry(p,title,288,333,450,30);
-  pvSetText(p,title,pvtr("Prointegra Datalogger Monitor"));
-  pvSetFont(p,title,"Arial",20,1,0,0,0);
+  pvQWidget(p,obj2,tab);
+  pvAddTab(p,tab,obj2,pvtr("Status"));
+  pvSetFont(p,obj2,"Verdana",10,0,0,0,0);
 
-  pvQLabel(p,version,0);
-  pvSetGeometry(p,version,693,390,99,30);
-  pvSetText(p,version,pvtr("v: 0.1"));
-  pvSetFont(p,version,"Arial",12,1,0,0,0);
+  pvDownloadFile(p,"./images/grey.png");
+  pvQImage(p,obj4,obj2,"./images/grey.png",&w,&h,&depth);
+  pvSetGeometry(p,obj4,174,21,40,36);
+  pvSetFont(p,obj4,"Sans Serif",9,0,0,0,0);
+  pvSetWhatsThis(p,obj4,pvtr("./images/grey.png"));
 
-  pvQLayoutVbox(p,ID_MAIN_WIDGET,-1);
+  pvQLabel(p,obj5,obj2);
+  pvSetGeometry(p,obj5,30,24,130,30);
+  pvSetText(p,obj5,pvtr("Com. Modbus TCP/IP"));
+  pvSetFont(p,obj5,"Sans Serif",9,0,0,0,0);
 
-  pvQLayoutHbox(p,ID_VERSION,-1);
+  pvQPushButton(p,obj6,obj2);
+  pvSetGeometry(p,obj6,243,24,99,30);
+  pvSetText(p,obj6,pvtr("Reinicializarlas"));
+  pvSetFont(p,obj6,"Sans Serif",9,0,0,0,0);
 
-  pvAddWidgetOrLayout(p,ID_MAIN_WIDGET,logo,-1,-1);
-  pvAddWidgetOrLayout(p,ID_MAIN_WIDGET,title,-1,-1);
-  pvAddWidgetOrLayout(p,ID_MAIN_WIDGET,ID_VERSION,-1,-1);
-  pvAddStretch(p,ID_VERSION,1);
-  pvAddWidgetOrLayout(p,ID_VERSION,version,-1,-1);
-  pvAddWidgetOrLayout(p,ID_MAIN_WIDGET,button1,-1,-1);
+  pvDownloadFile(p,"./images/grey.png");
+  pvQImage(p,obj7,obj2,"./images/grey.png",&w,&h,&depth);
+  pvSetGeometry(p,obj7,174,61,40,36);
+  pvSetFont(p,obj7,"Sans Serif",9,0,0,0,0);
+  pvSetWhatsThis(p,obj7,pvtr("./images/grey.png"));
+
+  pvQLabel(p,obj8,obj2);
+  pvSetGeometry(p,obj8,30,64,130,30);
+  pvSetText(p,obj8,pvtr("Com. Modbus RTU"));
+  pvSetFont(p,obj8,"Sans Serif",9,0,0,0,0);
+
+  pvQPushButton(p,obj9,obj2);
+  pvSetGeometry(p,obj9,243,64,99,30);
+  pvSetText(p,obj9,pvtr("Reinicializarlas"));
+  pvSetFont(p,obj9,"Sans Serif",9,0,0,0,0);
+
+  pvDownloadFile(p,"./images/grey.png");
+  pvQImage(p,obj10,obj2,"./images/grey.png",&w,&h,&depth);
+  pvSetGeometry(p,obj10,174,111,40,36);
+  pvSetFont(p,obj10,"Sans Serif",9,0,0,0,0);
+  pvSetWhatsThis(p,obj10,pvtr("./images/grey.png"));
+
+  pvQLabel(p,obj11,obj2);
+  pvSetGeometry(p,obj11,30,114,130,30);
+  pvSetText(p,obj11,pvtr("Captura MySQL"));
+  pvSetFont(p,obj11,"Sans Serif",9,0,0,0,0);
+
+  pvQPushButton(p,obj12,obj2);
+  pvSetGeometry(p,obj12,243,114,99,30);
+  pvSetText(p,obj12,pvtr("Reinicializarla"));
+  pvSetFont(p,obj12,"Sans Serif",9,0,0,0,0);
+
+  pvQLineEdit(p,debug_search,obj2);
+  pvSetGeometry(p,debug_search,75,351,140,30);
+  pvSetText(p,debug_search,pvtr("LineEdit"));
+  pvSetFont(p,debug_search,"Sans Serif",9,0,0,0,0);
+
+  pvQPushButton(p,debug_search_btn,obj2);
+  pvSetGeometry(p,debug_search_btn,225,351,99,30);
+  pvSetText(p,debug_search_btn,pvtr("buscar"));
+  pvSetFont(p,debug_search_btn,"Sans Serif",9,0,0,0,0);
+
+  pvQLineEdit(p,debug_find,obj2);
+  pvSetGeometry(p,debug_find,132,408,140,30);
+  pvSetText(p,debug_find,pvtr("LineEdit"));
+  pvSetFont(p,debug_find,"Sans Serif",9,0,0,0,0);
+
+  pvQLineEdit(p,debug_search2,obj2);
+  pvSetGeometry(p,debug_search2,378,351,140,30);
+  pvSetText(p,debug_search2,pvtr("LineEdit"));
+  pvSetFont(p,debug_search2,"Sans Serif",9,0,0,0,0);
+
+  pvQLineEdit(p,debug_find2,obj2);
+  pvSetGeometry(p,debug_find2,429,405,140,30);
+  pvSetText(p,debug_find2,pvtr("LineEdit"));
+  pvSetFont(p,debug_find2,"Sans Serif",9,0,0,0,0);
+
+  pvQPushButton(p,debug_search_btn2,obj2);
+  pvSetGeometry(p,debug_search_btn2,531,351,99,30);
+  pvSetText(p,debug_search_btn2,pvtr("buscar"));
+  pvSetFont(p,debug_search_btn2,"Sans Serif",9,0,0,0,0);
+
+  pvQWidget(p,obj3,tab);
+  pvAddTab(p,tab,obj3,pvtr("Configuration"));
+  pvSetFont(p,obj3,"Verdana",10,0,0,0,0);
+
+  pvQTextBrowser(p,console_output,0);
+  pvSetGeometry(p,console_output,1,642,1024,200);
+  pvSetFont(p,console_output,"Sans Serif",9,0,0,0,0);
+
 
   pvEndDefinition(p);
+  //pvTabOrder(p,tab,obj1);
+  //pvTabOrder(p,obj1,label1);
+  //pvTabOrder(p,label1,tab);
+  //pvTabOrder(p,tab,obj4);
   return 0;
 }
 

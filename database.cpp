@@ -56,7 +56,7 @@ int mysqlAccess::dbInit()
       }
 
     dbEnergyInit();
-    dbEventsInit();
+    // dbEventsInit();
     dbIndexInit();
 
     return 0;
@@ -67,7 +67,7 @@ int mysqlAccess::dbInit()
 int mysqlAccess::dbEnergyInit()
   {
     //If the events log table doesnt exist, create the table?
-    if (mysql_query(pmysql, "CREATE TABLE IF NOT EXISTS ENERGY_LOG(ID INT PRIMARY KEY AUTO_INCREMENT,COMMID INT,TAG_INDICE INT,VALOR FLOAT,HORA TIME,CICLO_DE_PROGRAMA INT,FECHA DATE)"))
+    if (mysql_query(pmysql, "CREATE TABLE IF NOT EXISTS ENERGY_LOG2(ID INT PRIMARY KEY AUTO_INCREMENT,COMMID INT,FECHA DATE,HORA TIME,TAG1_VALUE FLOAT,TAG2_VALUE FLOAT,TAG3_VALUE FLOAT,TAG4_VALUE FLOAT,TAG5_VALUE FLOAT,TAG6_VALUE FLOAT,TAG7_VALUE FLOAT,TAG8_VALUE FLOAT,TAG9_VALUE FLOAT,TAG10_VALUE FLOAT,TAG11_VALUE FLOAT,TAG12_VALUE FLOAT,TAG13_VALUE FLOAT,TAG14_VALUE FLOAT,TAG15_VALUE FLOAT,TAG16_VALUE FLOAT,TAG17_VALUE FLOAT,TAG18_VALUE FLOAT,TAG19_VALUE FLOAT,TAG20_VALUE FLOAT,TAG21_VALUE FLOAT,TAG22_VALUE FLOAT,TAG23_VALUE FLOAT,TAG24_VALUE FLOAT,TAG25_VALUE FLOAT,TAG26_VALUE FLOAT,TAG27_VALUE FLOAT,TAG28_VALUE FLOAT,TAG29_VALUE FLOAT,TAG30_VALUE FLOAT)"))
       {      
 	fprintf(stderr, "%s\n", mysql_error(pmysql));
 	mysql_close(pmysql);
@@ -144,7 +144,7 @@ int mysqlAccess::dbAppendIndex(char * path)
     }
 
   //IMPORTING FROM CSV
-  sprintf(query_def,"LOAD DATA LOCAL INFILE '%s' INTO TABLE DATA_INDEX_TEMP FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '\"' lines terminated by '\\n' IGNORE 1 ROWS",path);
+  sprintf(query_def,"LOAD DATA LOCAL INFILE '%s' INTO TABLE DATA_INDEX_TEMP FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' lines terminated by '\\n' IGNORE 1 ROWS",path);
   cout << "importing CSV " << endl;
   cout << query_def << endl;
   if(mysql_query(pmysql,query_def))
@@ -167,14 +167,18 @@ int mysqlAccess::dbAppendIndex(char * path)
 int mysqlAccess::dbSaveEnergy(int comm, int registros, mbRegData** regMatrix)
 {
   char sql[1200];
+  string squery;
+  ostringstream strstr;
   mbRegData* DATA;
   //SIN CICLOS
   int cycle = 0;
   long long value = 0;
-
-  cout << "DEBUG: inside save energy function " << endl;
+  int i;
+  //cout << "DEBUG: inside save energy function " << endl;
   DATA = *regMatrix;
-  for(int i=0;i < registros ; i++)
+  strstr <<  "INSERT INTO  ENERGY_LOG2(COMMID,FECHA,HORA,TAG1_VALUE,TAG2_VALUE,TAG3_VALUE,TAG4_VALUE,TAG5_VALUE,TAG6_VALUE,TAG7_VALUE,TAG8_VALUE,TAG9_VALUE,TAG10_VALUE,TAG11_VALUE,TAG12_VALUE,TAG13_VALUE,TAG14_VALUE,TAG15_VALUE,TAG16_VALUE,TAG17_VALUE,TAG18_VALUE,TAG19_VALUE,TAG20_VALUE,TAG21_VALUE,TAG22_VALUE,TAG23_VALUE,TAG24_VALUE,TAG25_VALUE,TAG26_VALUE,TAG27_VALUE,TAG28_VALUE,TAG29_VALUE,TAG30_VALUE) VALUES("<< comm << ",\"" << DATA[0].date << "\",\"" << DATA[0].time << "\",";
+
+  for(i=0;i < registros ; i++)
     {
       switch(DATA[i].type)
 	{
@@ -188,16 +192,39 @@ int mysqlAccess::dbSaveEnergy(int comm, int registros, mbRegData** regMatrix)
 	  value = value + DATA[i].valueHH * 1000000000000;
 	  //  cout << "DEBUG: valores: " << DATA[i].valueLL << " , " << DATA[i].valueL << " , " << DATA[i].valueH << " , " << DATA[i].valueHH << " = " << value << endl;
 	  break;
-	} 
-      sprintf(sql,"INSERT INTO  ENERGY_LOG(COMMID,TAG_INDICE,VALOR,HORA,FECHA) VALUES(%d,\"%d\",\"%lld\",\"%s\",\"%s\") \n",comm+1,DATA[i].index,value,DATA[i].time,DATA[i].date); 
-      if (mysql_query(pmysql, sql)) 
-	{
-	  fprintf(stderr, "%s\n", mysql_error(pmysql));
-	  //mysql_close(pDb);
-	  return -1;
 	}
+      if(!DATA[i].err)
+	{
+	  if(i < 29)
+	    strstr << value << ",";
+	  else
+	    strstr << value << ")";
+	}
+      else
+	{
+	  if(i < 29)
+	    strstr << "NULL" << ",";
+	  else
+	    strstr << "NULL" << ")";
+	}
+ 
     }
-  cout << "DEBUG: outside save energy function " << endl;
+  if(registros < 30)
+    {
+      for(i=registros;i<29;i++)
+	{
+	  strstr << "NULL,";
+	}
+      strstr << "NULL)";
+    }
+  squery = strstr.str();
+  if (mysql_query(pmysql,squery.c_str())) 
+    {
+      fprintf(stderr, "%s\n", mysql_error(pmysql));
+      //mysql_close(pDb);
+      return -1;
+    }
+  //cout << "DEBUG: outside save energy function " << endl;
   return 0;
 
 }

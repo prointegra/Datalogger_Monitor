@@ -14,14 +14,16 @@ HEADERS += ../lib/pugixml-1.5/src/pugixml.hpp \
 	capture.h \
 	database.h \
 	  pvapp.h      \
-           mask1_slots.h
+           mask1_slots.h \
+	mask2_slots.h
 
 SOURCES += ../lib/pugixml-1.5/src/pugixml.cpp \
 	   config.cpp     \
 	capture.cpp \
 	database.cpp \
 	   main.cpp     \
-           mask1.cpp
+           mask1.cpp \
+           mask2.cpp
 
 
 

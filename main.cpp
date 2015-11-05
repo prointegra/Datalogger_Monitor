@@ -195,6 +195,10 @@ int ret;
     if(trace) printf("show_mask%d\n", ret);
     switch(ret)
     {
+      case 2:
+        pvStatusMessage(p,-1,-1,-1,"mask2");
+        ret = show_mask2(p);
+        break;
       case 1:
         pvStatusMessage(p,-1,-1,-1,"mask1");
         ret = show_mask1(p);
@@ -260,12 +264,12 @@ capturer->initDatabase();
 
 	while(1)
 	{
-		printf("forked\n");
-		capturer->captureData();
-		//DEBUG 
-		//capturer->showCapturedData();
-		sleep(1);
-	//launchDaemonCAPTURE();
+	  printf("forked\n");
+	  capturer->captureData();
+	  //DEBUG 
+	  //capturer->showCapturedData();
+	  sleep(1);
+	  //launchDaemonCAPTURE();
 	}
    }
 

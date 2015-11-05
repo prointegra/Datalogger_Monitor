@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////
 //
-// show_mask1 for ProcessViewServer created: vie mar 27 13:39:08 2015
+// show_mask2 for ProcessViewServer created: vie mar 27 13:39:08 2015
 //
 ////////////////////////////////////////////////////////////////////////////
 #include "pvapp.h"
@@ -10,99 +10,32 @@
 // our mask contains the following objects
 enum {
   ID_MAIN_WIDGET = 0,
-  logo,
-  button1,
-  title,
-  version,
-  ID_VERSION,
   ID_END_OF_WIDGETS
 };
 
-// our mask contains the following widget names
-  static const char *widgetName[] = {
-  "ID_MAIN_WIDGET",
-  "logo",
-  "button1",
-  "title",
-  "version",
-  "ID_VERSION",
-  "ID_END_OF_WIDGETS",
-  ""};
+static const char *toolTip[] = {
+  ""
+};
 
-  static const char *toolTip[] = {
-  "",
-  "",
-  "",
-  "",
-  "",
-  ""};
-
-  static const char *whatsThis[] = {
-  "",
-  "./images/logo.png",
-  "",
-  "",
-  "",
-  ""};
-
-  static const int widgetType[ID_END_OF_WIDGETS+1] = {
-  0,
-  TQImage,
-  TQPushButton,
-  TQLabel,
-  TQLabel,
-  -1 };
+static const char *whatsThis[] = {
+  ""
+};
 
 static int generated_defineMask(PARAM *p)
 {
   int w,h,depth;
 
   if(p == NULL) return 1;
-  if(widgetName[0] == NULL) return 1; // suppress unused warning
   w = h = depth = strcmp(toolTip[0],whatsThis[0]);
-  if(widgetType[0] == -1) return 1;
   if(w==h) depth=0; // fool the compiler
   pvStartDefinition(p,ID_END_OF_WIDGETS);
-
-  pvDownloadFile(p,"./images/logo.png");
-  pvQImage(p,logo,0,"./images/logo.png",&w,&h,&depth);
-  pvSetGeometry(p,logo,228,87,680,160);
-  pvSetFont(p,logo,"Sans Serif",9,0,0,0,0);
-  pvSetWhatsThis(p,logo,pvtr("./images/logo.png"));
-
-  pvQPushButton(p,button1,0);
-  pvSetGeometry(p,button1,522,516,120,50);
-  pvSetText(p,button1,pvtr("Continue"));
-  pvSetFont(p,button1,"Sans Serif",12,1,0,0,0);
-
-  pvQLabel(p,title,0);
-  pvSetGeometry(p,title,288,333,450,30);
-  pvSetText(p,title,pvtr("Prointegra Datalogger Monitor"));
-  pvSetFont(p,title,"Arial",20,1,0,0,0);
-
-  pvQLabel(p,version,0);
-  pvSetGeometry(p,version,693,390,99,30);
-  pvSetText(p,version,pvtr("v: 0.1"));
-  pvSetFont(p,version,"Arial",12,1,0,0,0);
-
-  pvQLayoutVbox(p,ID_MAIN_WIDGET,-1);
-
-  pvQLayoutHbox(p,ID_VERSION,-1);
-
-  pvAddWidgetOrLayout(p,ID_MAIN_WIDGET,logo,-1,-1);
-  pvAddWidgetOrLayout(p,ID_MAIN_WIDGET,title,-1,-1);
-  pvAddWidgetOrLayout(p,ID_MAIN_WIDGET,ID_VERSION,-1,-1);
-  pvAddStretch(p,ID_VERSION,1);
-  pvAddWidgetOrLayout(p,ID_VERSION,version,-1,-1);
-  pvAddWidgetOrLayout(p,ID_MAIN_WIDGET,button1,-1,-1);
-
   pvEndDefinition(p);
   return 0;
 }
 
 // _end_of_generated_area_ (do not edit -> use ui2pvc) ---------------------
 
-#include "mask1_slots.h"
+#include "mask2_slots.h"
 
 static int defineMask(PARAM *p)
 {
@@ -128,7 +61,7 @@ static int readData(DATA *d) // from shared memory, database or something else
 }
 
 
-int show_mask1(PARAM *p)
+int show_mask2(PARAM *p)
 {
   DATA d;
   char event[MAX_EVENT_LENGTH];

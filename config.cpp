@@ -42,13 +42,21 @@ int MonConfigurator::IterateComms()
   ConfigSlaves = new mbSlaves[i];
   nSlaves = i;
   i=0;
+  setModbusRTU(0);
+  setModbusTCP(0);
   for (pugi::xml_node comm = doc.child("comm"); comm; comm = comm.next_sibling("comm"))
     {
       ConfigSlaves[i].slaveId = comm.attribute("slave").as_int();
       if(!strcmp(comm.attribute("mailbox").value(),"modbus_rtu"))
-	ConfigSlaves[i].Mailbox = new   rlDataAcquisition("../modbus_rtu.mbx","../modbus_rtu.shm",128536);
+	{
+	  setModbusRTU(1);
+	  ConfigSlaves[i].Mailbox = new   rlDataAcquisition("../modbus_rtu.mbx","../modbus_rtu.shm",128536);
+	}
       if(!strcmp(comm.attribute("mailbox").value(),"modbus_tcp"))
-	ConfigSlaves[i].Mailbox = new   rlDataAcquisition("../modbus.mbx","../modbus.shm",128536);
+	{
+	  ConfigSlaves[i].Mailbox = new   rlDataAcquisition("../modbus.mbx","../modbus.shm",128536);
+	  setModbusTCP(1);
+	}
       ConfigSlaves[i].mTime = comm.attribute("mTime").as_int();
       ConfigSlaves[i].nRegs = comm.attribute("registers").as_int(); //iniciamos  el numero de registros a leer
       ConfigSlaves[i].Registers = new mbReadData[ConfigSlaves[i].nRegs];
